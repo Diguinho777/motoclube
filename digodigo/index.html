@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniversário Insônia Moto Clube</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Fiery Rocker -->
+    <!-- Application Structure Plan: A single-page, scrollable digital poster. The structure guides the user from the main event announcement (what/when) in the hero section, through key details (attractions, social cause), to an interactive countdown timer for engagement, and finally a practical location map with an external link. This linear flow is intuitive for an event invitation, ensuring all critical information is presented clearly and progressively. -->
+    <!-- Visualization & Content Choices: Event Title -> Goal: Inform -> Large, styled text (HTML/CSS) -> No interaction -> Justification: Immediate high-impact communication. | Countdown -> Goal: Engage -> Dynamic numeric display (JS) -> Live updates -> Justification: Creates urgency and a dynamic feel. | Location -> Goal: Guide -> Stylized map (HTML/CSS) + Button -> Click to open Google Maps -> Justification: Provides clear location info and a practical action for users. | Details -> Goal: Inform -> Grouped text blocks (HTML/CSS) -> No interaction -> Justification: Clear and scannable presentation of essential facts. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow-x: hidden; /* Evita rolagem horizontal */
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: black; /* Fundo de fallback */
+            position: relative; /* Para o overlay */
+        }
+        .background-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('fotos/dim2.jpeg'); /* URL da imagem de fundo - SUBSTITUA AQUI! */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            z-index: -2; /* Garante que fique atrás do conteúdo */
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Camada semi-transparente para legibilidade do texto */
+            z-index: -1; /* Fica entre a imagem de fundo e o conteúdo */
+        }
+        h1, h2, h3 {
+            font-family: 'Anton', sans-serif;
+            /* Adiciona uma borda preta ao texto, agora mais espessa */
+            text-shadow: -6px -6px 0 #000,
+                         6px -6px 0 #000,
+                         -6px 6px 0 #000,
+                         6px 6px 0 #000;
+        }
+        .countdown-box {
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid #f59e0b;
+        }
+        /* Adiciona a borda preta aos números do contador, agora mais espessa */
+        #countdown-timer span {
+            text-shadow: -2px -2px 0 #000,
+                         2px -2px 0 #000,
+                         -2px 2px 0 #000,
+                         2px 2px 0 #000;
+        }
+    </style>
+</head>
+<body class="text-white antialiased">
+
+    <div class="background-image-container"></div>
+    <div class="overlay"></div>
+
+    <div class="container mx-auto px-4 py-8 md:py-16 relative z-0"> <!-- Conteúdo principal acima do overlay -->
+
+        <header class="text-center mb-12 md:mb-16">
+            <h1 class="text-5xl md:text-8xl font-bold tracking-wider text-yellow-400 uppercase">Insônia Moto Clube</h1>
+            <h2 class="text-3xl md:text-5xl text-white mt-2">Aniversário de 22 Anos!</h2>
+        </header>
+
+        <main>
+            <section id="event-details" class="mb-12 md:mb-16">
+                 <div class="text-center mb-12">
+                    <p class="text-2xl md:text-3xl text-gray-300 mb-2">Venha celebrar mais um ano de estrada, amizade e muito rock'n'roll com a família Insônia Moto Clube!</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="text-center md:text-left">
+                            <h3 class="text-6xl md:text-8xl font-bold text-white tracking-tighter">09/08</h3>
+                            <p class="text-2xl text-gray-400">Sexta-feira, a partir das 17h</p>
+                        </div>
+                        <div class="text-center">
+                             <h3 class="text-5xl md:text-7xl font-bold uppercase text-yellow-400">Aniversário 22 anos</h3>
+                             <div class="mt-4">
+                                <span class="inline-block bg-yellow-400 text-gray-900 text-lg font-bold px-4 py-2 rounded-md">Arrecadação de Alimentos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="countdown" class="mb-12 md:mb-16">
+                 <div class="max-w-4xl mx-auto text-center">
+                     <h3 class="text-3xl md:text-4xl text-white mb-6">Contagem Regressiva para o Evento</h3>
+                     <div id="countdown-timer" class="grid grid-cols-4 gap-2 md:gap-4 text-center">
+                         <div class="countdown-box p-4 rounded-lg">
+                             <span id="days" class="text-4xl md:text-6xl font-bold text-yellow-400">00</span>
+                             <span class="block text-sm uppercase text-gray-300">Dias</span>
+                         </div>
+                         <div class="countdown-box p-4 rounded-lg">
+                             <span id="hours" class="text-4xl md:text-6xl font-bold text-yellow-400">00</span>
+                             <span class="block text-sm uppercase text-gray-300">Horas</span>
+                         </div>
+                         <div class="countdown-box p-4 rounded-lg">
+                             <span id="minutes" class="text-4xl md:text-6xl font-bold text-yellow-400">00</span>
+                             <span class="block text-sm uppercase text-gray-300">Minutos</span>
+                         </div>
+                         <div class="countdown-box p-4 rounded-lg">
+                             <span id="seconds" class="text-4xl md:text-6xl font-bold text-yellow-400">00</span>
+                             <span class="block text-sm uppercase text-gray-300">Segundos</span>
+                         </div>
+                     </div>
+                 </div>
+            </section>
+            
+            <section id="location" class="text-center">
+                 <h3 class="text-3xl md:text-4xl text-white mb-6">Localização</h3>
+                <div class="bg-gray-800 rounded-lg shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
+                    <p class="text-2xl md:text-3xl text-yellow-400 font-bold mb-4">
+                        📍 Av. David Domingues Ferreira, 66 - Itaquera - SP
+                    </p>
+                    <div class="w-full h-64 md:h-80 bg-gray-700 rounded-lg flex items-center justify-center border-2 border-gray-600 mb-6 overflow-hidden">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Av.+David+Domingues+Ferreira,+66+-+Itaquera+-+SP&output=embed"
+                            width="100%"
+                            height="100%"
+                            frameborder="0"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+David+Domingues+Ferreira,+66+-+Itaquera+-+SP" target="_blank" rel="noopener noreferrer" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300">
+                        Abrir no Mapa
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-12 md:mt-16 pt-8 border-t border-gray-700">
+            <p class="text-gray-400">&copy; <span id="year"></span> Insônia Moto Clube. Todos os direitos reservados.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const countdown = () => {
+            const eventDate = new Date('August 9, 2025 17:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = eventDate - now;
+
+            if (difference < 0) {
+                document.getElementById('countdown-timer').innerHTML = '<div class="col-span-4 text-3xl font-bold text-green-400">O EVENTO JÁ ACONTECEU!</div>';
+                clearInterval(interval);
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        };
+
+        const interval = setInterval(countdown, 1000);
+        countdown();
+    </script>
+</body>
+</html>
